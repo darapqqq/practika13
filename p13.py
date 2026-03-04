@@ -26,6 +26,12 @@ users = cursor.fetchall()
 
 for user in users:
     print(user)
+
+cursor.execute('SELECT username, age FROM Users WHERE age > ?', (25,))
+results = cursor.fetchall()
+
+for row in results:
+    print(row)
     
 connection.commit()
 connection.close()
