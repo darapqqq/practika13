@@ -21,19 +21,13 @@ cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)',
 cursor.execute('UPDATE Users SET age = ? WHERE username = ?', (29, 'newuser'))
 cursor.execute('DELETE FROM Users WHERE username = ?', ('newuser',))
 
-cursor.execute('SELECT * FROM Users')
-users = cursor.fetchall()
-
-for user in users:
-    print(user)
-
-cursor.execute('SELECT age, AVG(age) FROM Users GROUP BY age')
-results = cursor.fetchall()
-
-for row in results:
-    print(row)
-
-cursor.execute('SELECT username, age FROM Users ORDER BY age DESC')
+cursor.execute('''
+    SELECT username, age, AVG(age) 
+    FROM Users 
+    GROUP BY age 
+    HAVING AVG(age) > ? 
+    ORDER BY age DESC
+''', (30,))
 results = cursor.fetchall()
 
 for row in results:
