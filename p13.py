@@ -19,16 +19,20 @@ cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)',
                ('user1', 'newuser1@example.com', 25))
 
 cursor.execute('SELECT * FROM Users')
-first_user = cursor.fetchone()
-print(first_user)
+users = cursor.fetchall()
 
-cursor.execute('SELECT * FROM Users')
-first_five_users = cursor.fetchmany(5)
-print(first_five_users)
+users_list = []
+for user in users:
+    user_dict = {
+        'id': user[0],
+        'username': user[1],
+        'email': user[2],
+        'age': user[3]
+    }
+    users_list.append(user_dict)
 
-cursor.execute('SELECT * FROM Users')
-all_users = cursor.fetchall()
-print(all_users)
+for user in users_list:
+    print(user)
 
 connection.commit()
 connection.close()
