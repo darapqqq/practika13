@@ -16,5 +16,7 @@ cursor.execute('''
 cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)', 
                ('newuser', 'newuser@example.com', 28))
 
+cursor.execute('UPDATE Users SET age = ? WHERE username = ?', (29, 'newuser'))
+
 connection.commit()
 connection.close()
