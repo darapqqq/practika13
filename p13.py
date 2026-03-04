@@ -18,27 +18,18 @@ cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)',
 cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)', 
                ('user1', 'newuser1@example.com', 25))
 
-cursor.execute('SELECT * FROM Users')
-users = cursor.fetchall()
-
-users_list = []
-for user in users:
-    user_dict = {
-        'id': user[0],
-        'username': user[1],
-        'email': user[2],
-        'age': user[3]
-    }
-    users_list.append(user_dict)
-
-for user in users_list:
-    print(user)
-
-cursor.execute('SELECT * FROM Users WHERE age IS NULL')
-unknown_age_users = cursor.fetchall()
-
-for user in unknown_age_users:
-    print(user)
+try:
+    cursor.execute('BEGIN')
+    
+    cursor.execute('INSERT INTO Users (username, email) VALUES (?, ?)', 
+                   ('user1', 'user1@example.com'))
+    cursor.execute('INSERT INTO Users (username, email) VALUES (?, ?)', 
+                   ('user2', 'user2@example.com'))
+    
+    cursor.execute('COMMIT')
+    
+except:
+    cursor.execute('ROLLBACK')
     
 connection.commit()
 connection.close()
