@@ -18,14 +18,10 @@ cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)',
 cursor.execute('INSERT INTO Users (username, email, age) VALUES (?, ?, ?)', 
                ('user1', 'newuser1@example.com', 25))
 
-cursor.execute('''
-    SELECT username, age 
-    FROM Users 
-    WHERE age = (SELECT MAX(age) FROM Users)
-''')
-oldest_users = cursor.fetchall()
+cursor.execute('SELECT * FROM Users')
+users = cursor.fetchall()
 
-for user in oldest_users:
+for user in users:
     print(user)
     
 connection.commit()
